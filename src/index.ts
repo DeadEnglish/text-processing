@@ -137,10 +137,10 @@ const answerSeven = (text: string): string => {
 };
 
 // TODO: This may not be correct but I'm slightly over two hours
-const bonusAnswer = (text: string): Record<string, number> => {
+const bonusAnswer = (text: string): Record<string, string> => {
 	const wordArray = arrayOfWords(text);
 	const topFiveWords: string[] = [];
-	const wordProminence: Record<string, number> = {};
+	const wordProminence: Record<string, string> = {};
 
 	const reoccuringWordCount = createWordCounterMap(wordArray);
 
@@ -153,7 +153,7 @@ const bonusAnswer = (text: string): Record<string, number> => {
 	for (let i = 0; i < 5; i++) {
 		const keyValue = sortedMapKeys.next().value;
 		topFiveWords.push(keyValue);
-		wordProminence[`${keyValue}`] = 0;
+		wordProminence[`${keyValue}`] = "";
 	}
 
 	topFiveWords.forEach((word) => {
@@ -168,8 +168,9 @@ const bonusAnswer = (text: string): Record<string, number> => {
 			wordArray.length,
 			positionSum,
 			sortedMap.get(word)!
-		);
-		wordProminence[`${word}`] = prominence;
+		).toFixed(2);
+
+		wordProminence[`${word}`] = `${prominence}%`;
 	});
 
 	return wordProminence;
