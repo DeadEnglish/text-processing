@@ -133,12 +133,12 @@ console.log("How many words are there in the text?: ", answerOne(text));
 console.log("How many sentences are there in the text?: ", answerTwo(text));
 console.log("What is the length of the longest word?: ", answerThree(text));
 console.log("Which six words occur the most in the text?", answerFour(text));
-console.log("What percentage of the words only occur once?", answerFive(text));
+console.log("What percentage of the words only occur once?:", answerFive(text));
 console.log(
-	"What is the average number of words per sentence",
+	"What is the average number of words per sentence?:",
 	answerSix(text)
 );
 console.log(
-	"Which three two-word phrases occur the most in the text",
+	"Which three two-word phrases occur the most in the text?:",
 	answerSeven(text)
 );
