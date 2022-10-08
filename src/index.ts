@@ -43,6 +43,14 @@ const xMapValueAsString = (map: Map<string, number>, x: number): string => {
 	return valuesToReturn.join(", ");
 };
 
+const calculateWordProminence = (
+	totalWords: number,
+	positionSum: number,
+	positionsNum: number
+): number => {
+	return (totalWords - (positionSum - 1) / positionsNum) * (100 / totalWords);
+};
+
 // Answer functions
 const answerOne = (text: string): number => {
 	return arrayOfWords(text).length;
@@ -100,6 +108,7 @@ const answerSix = (text: string): number => {
 	return Math.floor(total / sentancesArray.length);
 };
 
+// Question: should a word with a trailing period count the next word as a "two-word phrase"?
 const answerSeven = (text: string): string => {
 	const wordArray = arrayOfWords(text);
 	let reoccuringWordCount: Map<string, number> = new Map<string, number>();
@@ -127,7 +136,44 @@ const answerSeven = (text: string): string => {
 	return xMapValueAsString(sortedMap, 3);
 };
 
-// TODO: Circle back to bonus question
+// TODO: This may not be correct but I'm slightly over two hours
+const bonusAnswer = (text: string): Record<string, number> => {
+	const wordArray = arrayOfWords(text);
+	const topFiveWords: string[] = [];
+	const wordProminence: Record<string, number> = {};
+
+	const reoccuringWordCount = createWordCounterMap(wordArray);
+
+	const sortedMap: Map<string, number> = new Map<string, number>(
+		[...reoccuringWordCount.entries()].sort((a, b) => b[1] - a[1])
+	);
+
+	const sortedMapKeys = sortedMap.keys();
+
+	for (let i = 0; i < 5; i++) {
+		const keyValue = sortedMapKeys.next().value;
+		topFiveWords.push(keyValue);
+		wordProminence[`${keyValue}`] = 0;
+	}
+
+	topFiveWords.forEach((word) => {
+		let positionSum = 0;
+
+		wordArray.forEach(
+			(arrWord, index) =>
+				arrWord === word && (positionSum = positionSum + index)
+		);
+
+		const prominence = calculateWordProminence(
+			wordArray.length,
+			positionSum,
+			sortedMap.get(word)!
+		);
+		wordProminence[`${word}`] = prominence;
+	});
+
+	return wordProminence;
+};
 
 console.log("How many words are there in the text?: ", answerOne(text));
 console.log("How many sentences are there in the text?: ", answerTwo(text));
@@ -141,4 +187,8 @@ console.log(
 console.log(
 	"Which three two-word phrases occur the most in the text?:",
 	answerSeven(text)
+);
+console.log(
+	"What is the prominence of the five words that occur the most in the text?:",
+	bonusAnswer(text)
 );
