@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "ES2016",
+    "module": "esnext",
+    "esModuleInterop": true,
+    "strict": true,
+    "rootDir": "src",
+    "outDir": "dist",
+	"moduleResolution": "node",
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
+}

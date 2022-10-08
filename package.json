@@ -1,0 +1,17 @@
+{
+  "name": "text-processing",
+  "version": "1.0.0",
+  "description": "ember text processing tech test",
+  "main": "index.ts",
+  "author": "liam canetti",
+  "license": "GPLv3",
+  "private": true,
+  "type": "module",
+  "scripts": {
+	"build": "tsc --build",
+	"build-run": "tsc --build && node dist/index.js"
+  },
+  "devDependencies": {
+    "typescript": "^4.8.4"
+  }
+}
